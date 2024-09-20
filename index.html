@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocket Chat</title>
+</head>
+<body>
+    <h1>WebSocket Chat</h1>
+    <div id="messages"></div>
+    <input type="text" id="message-input" placeholder="Type a message..." />
+    <button id="send-btn">Send</button>
+
+    <script>
+        // WebSocket 클라이언트 설정
+        const socket = new WebSocket("ws://127.0.0.1:3001/ws");
+
+        // 서버로부터 메시지 수신 시 처리
+        socket.onmessage = function (event) {
+            const message = event.data;
+            const messageDiv = document.createElement("div");
+            messageDiv.textContent = `Received: ${message}`;
+            document.getElementById("messages").appendChild(messageDiv);
+        };
+
+        // 버튼 클릭 시 메시지 전송
+        document.getElementById("send-btn").addEventListener("click", () => {
+            const input = document.getElementById("message-input");
+            const message = input.value;
+            socket.send(message);
+
+            // 전송한 메시지를 화면에 표시
+            const messageDiv = document.createElement("div");
+            messageDiv.textContent = `Sent: ${message}`;
+            document.getElementById("messages").appendChild(messageDiv);
+
+            // 입력 필드 초기화
+            input.value = "";
+        });
+    </script>
+</body>
+</html>
