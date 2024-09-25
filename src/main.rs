@@ -1,6 +1,30 @@
-use axum_socket::{tcp_example,udp_example};
+use tokio::net::UdpSocket;
+use tokio::io;
 
-fn main(){
-    // tcp_example::example();
-    udp_example::example();
+#[tokio::main]
+pub async fn main() -> io::Result<()> {
+    // UDP 소켓을 바인딩 (127.0.0.1의 8080 포트)
+    let socket = UdpSocket::bind("127.0.0.1:8080").await?;
+    println!("Listening on 127.0.0.1:8080");
+
+    let mut buf = vec![0u8; 1024];  // 1024 바이트 버퍼
+
+    loop {
+        // 클라이언트로부터 데이터 수신
+        let (len, addr) = socket.recv_from(&mut buf).await?;
+
+        println!("Received {} bytes from {}", len, addr);
+
+        // 수신한 메시지를 UTF-8로 변환하여 출력
+        if let Ok(message) = std::str::from_utf8(&buf[..len]) {
+            println!("Received message: {}", message);
+        } else {
+            println!("Received non-UTF8 data");
+        }
+
+        // 수신한 데이터를 그대로 클라이언트에게 전송 (에코)
+        socket.send_to(&buf[..len], &addr).await?;
+
+        println!("Echoed {} bytes to {}", len, addr);
+    }
 }

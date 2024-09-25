@@ -2,7 +2,7 @@ use tokio::net::UdpSocket;
 use tokio::io;
 
 #[tokio::main]
-pub async fn example() -> io::Result<()> {
+pub async fn main() -> io::Result<()> {
     // UDP 소켓을 바인딩 (127.0.0.1의 8080 포트)
     let socket = UdpSocket::bind("127.0.0.1:8080").await?;
     println!("Listening on 127.0.0.1:8080");
