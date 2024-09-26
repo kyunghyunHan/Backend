@@ -1,5 +1,5 @@
-use axum_socket::{tcp_example, udp_example};
+use axum_socket::{tcp_example, udp_example,websocket};
 
 fn main(){
-    udp_example::example();
+    websocket::example();
 }
