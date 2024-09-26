@@ -73,7 +73,7 @@ pub async  fn example() {
     let listener = JdListener::new(tx.clone());
 
     // TCP 리스너 시작
-    listener.start("127.0.0.1", 4000).await;
+    listener.start("127.0.0.1", 8080).await;
 
     println!("TCP server running on 127.0.0.1:4000");
 
