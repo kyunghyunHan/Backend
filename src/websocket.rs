@@ -23,6 +23,8 @@ async fn handle_connection(stream: tokio::net::TcpStream, rooms: Rooms) {
     // 클라이언트가 메시지를 보낼 때 방 선택 및 메시지 전송
     while let Some(Ok(message)) = read.next().await {
         if let Ok(text) = message.to_text() {
+
+            println!("{}",text);
             let parts: Vec<&str> = text.splitn(2, ":").collect();
             if parts.len() != 2 {
                 println!("Invalid message format. Expected 'room:message'");
@@ -63,7 +65,6 @@ pub async fn example() {
 
     while let Ok((stream, _)) = listener.accept().await {
         let rooms = rooms.clone();
-        let connection = connection.clone();
         tokio::spawn(handle_connection(stream, rooms));
     }
 }
