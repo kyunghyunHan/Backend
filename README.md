@@ -12,9 +12,9 @@
 
 ## RabbitMq
 - brew install rabbitmq 
--  brew services start rabbitmq
--   brew services restart rabbitmq
--    brew services stop rabbitmq
+- brew services start rabbitmq
+- brew services restart rabbitmq
+- brew services stop rabbitmq
 
 
 ## Multicast
