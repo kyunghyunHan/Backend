@@ -25,3 +25,5 @@ ALTER USER admin WITH PASSWORD 'qwer1234';
 `
 GRANT ALL PRIVILEGES ON DATABASE test TO admin;
 `
+
+## [Grammar](./postgre_sql.md)
