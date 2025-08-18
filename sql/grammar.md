@@ -184,3 +184,18 @@ SELECT product_id, 'store3' AS store, store3 AS price
 FROM Products
 WHERE store3 IS NOT NULL;
 ```
+
+
+## Setting
+
+```sql
+CREATE USER 'user_name' WITH PASSWORD 'password';
+
+CREATE DATABASE 'db_name';
+
+GRANT ALL PRIVILEGES ON DATABASE perth_db TO perth_admin;
+
+-- 4. 사용자를 슈퍼유저로 만들기 (필요시)
+ALTER USER perth_admin WITH SUPERUSER;
+```
+
