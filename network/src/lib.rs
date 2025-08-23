@@ -1,9 +1,10 @@
 pub mod bloking;
 pub mod connection;
+pub mod graph_ql;
 pub mod grpc;
+pub mod numa;
 pub mod quic;
 pub mod simd;
 pub mod tcp;
 pub mod udp;
 pub mod websocket;
-pub mod graph_ql;
