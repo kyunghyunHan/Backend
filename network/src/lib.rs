@@ -1,5 +1,6 @@
 pub mod bloking;
 pub mod connection;
+pub mod grpc;
 pub mod quic;
 pub mod simd;
 pub mod tcp;
