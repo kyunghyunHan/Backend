@@ -2,3 +2,6 @@
 .env
 */node_modules
 *json
+.DS_Store
+.DS_Store        # ← 추가
+**/.DS_Store     # ← 모든 서브디렉토리의 .DS_Store 제외

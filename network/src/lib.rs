@@ -6,3 +6,4 @@ pub mod simd;
 pub mod tcp;
 pub mod udp;
 pub mod websocket;
+pub mod graph_ql;
