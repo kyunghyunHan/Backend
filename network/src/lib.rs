@@ -4,6 +4,7 @@ pub mod graph_ql;
 pub mod grpc;
 pub mod numa;
 pub mod quic;
+pub mod rabbitmq;
 pub mod simd;
 pub mod tcp;
 pub mod udp;
