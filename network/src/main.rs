@@ -1,7 +1,7 @@
 use futures_util::TryFutureExt;
 use network::{
     bloking::basic as bloking, graph_ql::basic as graph_ql, grpc::basic as grpc, numa,
-    quic::basic as quic, simd::basic as simd, tcp::tcp_basic, udp::udp_basic, websocket,
+    quic::basic as quic, simd::basic as simd, tcp::{self, tcp_basic}, udp::udp_basic, websocket,
 };
 
 fn main() {
@@ -15,5 +15,6 @@ fn main() {
     //     println!("{}","error")
     // });
     // numa::example();
-    websocket::basic::example().unwrap();
+    // websocket::basic::example().unwrap();
+    tcp::tcp_echo::main();
 }
