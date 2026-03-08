@@ -2,7 +2,7 @@
 use tokio::io::{AsyncReadExt,AsyncWriteExt};
 use tokio::net::{TcpListener,TcpStream};
 
-async fn handle_client(mut soket:TcpStream,addr:std::net::SocketAddr){
+async fn handle_client(mut socket:TcpStream,addr:std::net::SocketAddr){
     println!("[SERVER] Client connected: {}", addr);
     
     let mut buffer = [0u8;1024];
@@ -70,7 +70,7 @@ async fn tcp_client() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
 #[tokio::main]
 
-async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     println!("Starting TCP Echo Example\n");
 
     // 서버 실행
