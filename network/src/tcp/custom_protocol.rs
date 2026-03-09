@@ -122,7 +122,7 @@ async fn custom_protocol_client() -> Result<(), Box<dyn std::error::Error + Send
 // ==================== MAIN ====================
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     println!("Starting Length-Prefixed Custom Protocol Example\n");
 
     tokio::spawn(async {
