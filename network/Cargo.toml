@@ -29,5 +29,7 @@ axum = "0.8.4"
 reqwest = { version = "0.12.23", features = ["json"] } 
 libc = "0.2.175"
 mio = { version = "0.8", features = ["os-poll", "net"] }
+pnet = "0.35.0"
+anyhow = "1.0.102"
 [build-dependencies]
 tonic-prost-build = "0.14.1"

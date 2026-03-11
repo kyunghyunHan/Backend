@@ -1,7 +1,6 @@
 use futures_util::TryFutureExt;
 use network::{
-    bloking::basic as bloking, graph_ql::basic as graph_ql, grpc::basic as grpc, numa,
-    quic::basic as quic, simd::basic as simd, tcp::{self, chat, custom_protocol, multi_tcp, non_blocking, tcp_basic}, udp::{udp_basic, udp_echo}, websocket,
+    bloking::basic as bloking, ethernet, graph_ql::basic as graph_ql, grpc::basic as grpc, numa, quic::basic as quic, simd::basic as simd, tcp::{self, chat, custom_protocol, multi_tcp, non_blocking, tcp_basic}, udp::{udp_basic, udp_echo}, websocket
 };
 
 fn main() {
@@ -21,5 +20,6 @@ fn main() {
     // multi_tcp::main();
     // chat::main();
     // custom_protocol::main();
-    non_blocking::main();
+    // non_blocking::main();
+    ethernet::pnet::main();
 }
