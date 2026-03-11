@@ -7,7 +7,7 @@ use std::net::SocketAddr;
 
 const SERVER: Token = Token(0);
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+pub fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr: SocketAddr = "127.0.0.1:8080".parse()?;
 
     let mut listener = TcpListener::bind(addr)?;
