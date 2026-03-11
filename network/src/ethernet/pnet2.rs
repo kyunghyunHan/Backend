@@ -1,11 +1,48 @@
 use pnet::datalink::{self, Channel::Ethernet};
 use pnet::packet::{
     ethernet::{EtherTypes, EthernetPacket},
+    ip::IpNextHeaderProtocols,
     ipv4::Ipv4Packet,
+    tcp::TcpPacket,
     Packet,
 };
 
-pub fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn tcp_flags_to_string(flags: u8) -> String {
+    let mut parts = Vec::new();
+
+    if flags & 0x01 != 0 {
+        parts.push("FIN");
+    }
+    if flags & 0x02 != 0 {
+        parts.push("SYN");
+    }
+    if flags & 0x04 != 0 {
+        parts.push("RST");
+    }
+    if flags & 0x08 != 0 {
+        parts.push("PSH");
+    }
+    if flags & 0x10 != 0 {
+        parts.push("ACK");
+    }
+    if flags & 0x20 != 0 {
+        parts.push("URG");
+    }
+    if flags & 0x40 != 0 {
+        parts.push("ECE");
+    }
+    if flags & 0x80 != 0 {
+        parts.push("CWR");
+    }
+
+    if parts.is_empty() {
+        "NONE".to_string()
+    } else {
+        parts.join("|")
+    }
+}
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let interface_name = "en0";
 
     let interfaces = datalink::interfaces();
@@ -28,27 +65,27 @@ pub fn main() -> Result<(), Box<dyn std::error::Error>> {
     loop {
         match rx.next() {
             Ok(packet) => {
+                // 1. Ethernet 프레임으로 해석
                 if let Some(eth) = EthernetPacket::new(packet) {
-                    println!(
-                        "[ETH] {} -> {} type={:?}",
-                        eth.get_source(),
-                        eth.get_destination(),
-                        eth.get_ethertype()
-                    );
-
-                    match eth.get_ethertype() {
-                        EtherTypes::Ipv4 => {
-                            if let Some(ipv4) = Ipv4Packet::new(eth.payload()) {
-                                println!(
-                                    "[IPv4] {} -> {}",
-                                    ipv4.get_source(),
-                                    ipv4.get_destination()
-                                );
-                            } else {
-                                println!("[IPv4] 파싱 실패");
+                    // 2. Ethernet 안에 IPv4가 들어있는 경우만 처리
+                    if eth.get_ethertype() == EtherTypes::Ipv4 {
+                        // 3. Ethernet payload를 IPv4 패킷으로 해석
+                        if let Some(ipv4) = Ipv4Packet::new(eth.payload()) {
+                            // 4. IPv4 안에 TCP가 들어있는 경우만 처리
+                            if ipv4.get_next_level_protocol() == IpNextHeaderProtocols::Tcp {
+                                // 5. IPv4 payload를 TCP 패킷으로 해석
+                                if let Some(tcp) = TcpPacket::new(ipv4.payload()) {
+                                    println!(
+                                        "[TCP] {}:{} -> {}:{} | flags={}",
+                                        ipv4.get_source(),
+                                        tcp.get_source(),
+                                        ipv4.get_destination(),
+                                        tcp.get_destination(),
+                                        tcp_flags_to_string(tcp.get_flags()),
+                                    );
+                                }
                             }
                         }
-                        _ => {}
                     }
                 }
             }
